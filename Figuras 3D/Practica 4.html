@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Practica 4 - Cubo y Esfera Animacion </title>
+  	<script type="text/javascript" src="three.js"></script>
+  	<script type="text/javascript" src="jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="dat.gui.js"></script>
+    <style>
+  		body{
+  			/* Poner el margen del documento html a 0 y ocultar el desbordamiento para mostrar la escena a ventana completa */
+  			margin: 0;
+  			overflow: hidden;
+  		}
+  	</style>
+  </head>
+  <body>
+
+    <div id="SalidaWebGL"></div>
+
+  <script type="text/javascript">
+    $(function () {
+      var escena = new THREE.Scene();
+
+      var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camara.position.x = -30;
+      camara.position.y = 40;
+      camara.position.z = 30;
+      camara.lookAt(escena.position);
+
+      var renderizador = new THREE.WebGLRenderer();
+      renderizador.setClearColor(new THREE.Color(0xEEEEEE));
+      renderizador.setSize(window.innerWidth, window.innerHeight);
+      renderizador.shadowMapEnabled = true;
+
+      var ejes = new THREE.AxisHelper( 20 );
+      escena.add(ejes);
+
+      var geometriaDelPlano = new THREE.PlaneGeometry(60,20);
+      var materialDelPlano = new THREE.MeshLambertMaterial({color: 0xcccccc});
+      var plano = new THREE.Mesh(geometriaDelPlano,materialDelPlano);
+
+      plano.rotation.x=-0.5*Math.PI;
+      plano.position.x=15
+      plano.position.y=0
+      plano.position.z=0
+      plano.receiveShadow = true;
+      escena.add(plano);
+
+      var geometriaDelCubo = new THREE.CubeGeometry(4,4,4);
+      var materialDelCubo = new THREE.MeshLambertMaterial({color: 0xff0000});
+      var cubo = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+
+      cubo.position.x=-4;
+      cubo.position.y=3;
+      cubo.position.z=0;
+      cubo.castShadow = true;
+      escena.add(cubo);
+
+      var geometriaDeLaEsfera= new THREE.SphereGeometry(4,20,20);
+      var materialDeLaEsfera = new THREE.MeshLambertMaterial({color: 0x7777ff });
+      var esfera = new THREE.Mesh(geometriaDeLaEsfera, materialDeLaEsfera);
+
+      esfera.position.x=20;
+      esfera.position.y=4;
+      esfera.position.z=2;
+      esfera.castShadow = true;
+      escena.add(esfera);
+
+      var luz = new THREE.SpotLight( 0xffffff );
+      luz.position.set( -40, 60, -10 );
+      luz.castShadow = true;
+      escena.add( luz );
+
+      $("#SalidaWebGL").append(renderizador.domElement);
+
+      renderizador.render(escena, camara);
+
+      var paso=0;
+
+      animar();
+
+      function animar() {
+            cubo.rotation.x += 0.02;
+            cubo.rotation.y += 0.02;
+            cubo.rotation.z += 0.02;
+
+            paso+=0.04;
+            esfera.position.x = 20+( 10*(Math.cos(paso)));
+            esfera.position.y = 2 +( 10*Math.abs(Math.sin(paso)));
+
+            requestAnimationFrame(animar);
+            renderizador.render(escena, camara);
+      }
+    });
+  </script>
+  </body>
+</html>

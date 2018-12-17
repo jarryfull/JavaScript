@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Practica 3 - Letra J</title>
+  	<script type="text/javascript" src="three.js"></script>
+  	<script type="text/javascript" src="jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="dat.gui.js"></script>
+    <style>
+  		body{
+  			/* Poner el margen del documento html a 0 y ocultar el desbordamiento para mostrar la escena a ventana completa */
+  			margin: 0;
+  			overflow: hidden;
+  		}
+  	</style>
+  </head>
+  <body>
+
+    <div id="SalidaWebGL"></div>
+
+  <script type="text/javascript">
+    $(function () {
+      var escena = new THREE.Scene();
+
+      var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camara.position.x = -30;
+      camara.position.y = 40;
+      camara.position.z = 30;
+      camara.lookAt(escena.position);
+
+      var renderizador = new THREE.WebGLRenderer();
+      renderizador.setClearColor(new THREE.Color(0xEEEEEE));
+      renderizador.setSize(window.innerWidth, window.innerHeight);
+      renderizador.shadowMapEnabled = true;
+
+      var luz = new THREE.SpotLight( 0xffffff );
+      luz.position.set( -40, 60, 20 );
+      luz.castShadow = true;
+      escena.add( luz );
+
+      var geometriaDelPlano = new THREE.PlaneGeometry(50,40);
+      var materialDelPlano = new THREE.MeshLambertMaterial({color: 0x7777ff});
+      var plano = new THREE.Mesh(geometriaDelPlano,materialDelPlano);
+
+      plano.rotation.x=-0.5*Math.PI;
+      plano.position.x=10
+      plano.position.y=0
+      plano.position.z=-3
+      plano.receiveShadow = true;
+      escena.add(plano);
+
+//CUBO 0
+      var geometriaDelCubo = new THREE.CubeGeometry(4,4,4);
+      var materialDelCubo = new THREE.MeshLambertMaterial({color: 0xff0000});
+      var cubo = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo.position.x=-8;
+      cubo.position.y=7;
+      cubo.position.z=0;
+      cubo.castShadow = true;
+      escena.add(cubo);
+//CUBO 1
+      var geometriaDelCubo = new THREE.CubeGeometry(4,4,4);
+      var materialDelCubo = new THREE.MeshLambertMaterial({color: 0xff0000});
+      var cubo1 = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo1.position.x=-8;
+      cubo1.position.y=3;
+      cubo1.position.z=0;
+      cubo1.castShadow = true;
+      escena.add(cubo1);
+//CUBO 2
+      var cubo2 = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo2.position.x=-4;
+      cubo2.position.y=3;
+      cubo2.position.z=0;
+      cubo2.castShadow = true;
+      escena.add(cubo2);
+//CUBO 3
+      var cubo3 = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo3.position.x=0;
+      cubo3.position.y=3;
+      cubo3.position.z=0;
+      cubo3.castShadow = true;
+      escena.add(cubo3);
+//CUBO 4
+      var cubo4 = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo4.position.x=0;
+      cubo4.position.y=7;
+      cubo4.position.z=0;
+      cubo4.castShadow = true;
+      escena.add(cubo4);
+//CUBO 5
+      var cubo5 = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo5.position.x=0;
+      cubo5.position.y=11;
+      cubo5.position.z=0;
+      cubo5.castShadow = true;
+      escena.add(cubo5);
+//CUBO 6
+      var cubo6 = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo6.position.x=0;
+      cubo6.position.y=15;
+      cubo6.position.z=0;
+      cubo6.castShadow = true;
+      escena.add(cubo6);
+//CUBO 7
+      var cubo7 = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo7.position.x=0;
+      cubo7.position.y=19;
+      cubo7.position.z=0;
+      cubo7.castShadow = true;
+      escena.add(cubo7);
+//CUBO 8 IZQ
+      var cubo8 = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo8.position.x=-4 ;
+      cubo8.position.y=19;
+      cubo8.position.z=0;
+      cubo8.castShadow = true;
+      escena.add(cubo8);
+//CUBO 9 DER
+      var cubo9 = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+      cubo9.position.x=4 ;
+      cubo9.position.y=19;
+      cubo9.position.z=0;
+      cubo9.castShadow = true;
+      escena.add(cubo9);
+
+      $("#SalidaWebGL").append(renderizador.domElement);
+
+      renderizador.render(escena, camara);
+    });
+  </script>
+  </body>
+</html>

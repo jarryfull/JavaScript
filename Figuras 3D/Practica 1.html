@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Practica 1 - Primera Escena</title>
+  	<script type="text/javascript" src="three.js"></script>
+  	<script type="text/javascript" src="jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="dat.gui.js"></script>
+    <style>
+  		body{
+  			/* Poner el margen del documento html a 0 y ocultar el desbordamiento para mostrar la escena a ventana completa */
+  			margin: 0;
+  			overflow: hidden;
+  		}
+  	</style>
+  </head>
+  <body>
+
+    <div id="SalidaWebGL"></div>
+
+  <script type="text/javascript">
+    $(function () {
+      var escena = new THREE.Scene();
+      var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+      var renderizador = new THREE.WebGLRenderer();
+
+      renderizador.setClearColor(new THREE.Color(0xEEEEEE));
+      renderizador.setSize(window.innerWidth, window.innerHeight);
+
+      var ejes = new THREE.AxisHelper( 20 );
+      escena.add(ejes);
+
+      var geometriaDelPlano = new THREE.PlaneGeometry(60,20);
+      var materialDelPlano = new THREE.MeshBasicMaterial({color: 0xcccccc});
+      var plano = new THREE.Mesh(geometriaDelPlano,materialDelPlano);
+
+      plano.rotation.x=-0.5*Math.PI;
+      plano.position.x=15
+      plano.position.y=0
+      plano.position.z=0
+      escena.add(plano);
+
+      var geometriaDelCubo = new THREE.CubeGeometry(4,4,4);
+      var materialDelCubo = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
+      var cubo = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+
+      cubo.position.x=-4;
+      cubo.position.y=3;
+      cubo.position.z=0;
+      escena.add(cubo);
+
+      var geometriaDeLaEsfera= new THREE.SphereGeometry(4,20,20);
+      var materialDeLaEsfera = new THREE.MeshBasicMaterial({color: 0x7777ff, wireframe: true});
+      var esfera = new THREE.Mesh(geometriaDeLaEsfera, materialDeLaEsfera);
+
+      esfera.position.x=20;
+      esfera.position.y=4;
+      esfera.position.z=2;
+      esfera.castShadow = true;
+      escena.add(esfera);
+
+      camara.position.x = -30;
+      camara.position.y = 40;
+      camara.position.z = 30;
+      camara.lookAt(escena.position);
+
+      $("#SalidaWebGL").append(renderizador.domElement);
+
+      renderizador.render(escena, camara);
+    });
+  </script>
+  </body>
+</html>

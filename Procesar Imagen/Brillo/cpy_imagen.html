@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Copiar Imagen</title>
+    <link rel="stylesheet" href="cpy_imagen.css">
+  </head>
+  <body>
+   <canvas id='canvas'></canvas>
+   <canvas id='canvas2'></canvas>
+   <input type='file' id='cargar'>
+   <input type="button" value="Copiar" onclick="copiar()" />
+   <input type="button" value="Brillo" onclick="blancoNegro()" />
+   <input type="range" min="0" max="255" value="127" id="umbral">
+    <script src="cpy_imagen.js"></script>
+  </body>
+
+</html>

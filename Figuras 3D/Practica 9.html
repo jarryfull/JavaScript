@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Practica 9 - Sistema Solar</title>
+  	<script type="text/javascript" src="three.js"></script>
+  	<script type="text/javascript" src="jquery-1.9.0.js"></script>
+    <script type="text/javascript" src="dat.gui.js"></script>
+    <style>
+  		body{
+  			/* Poner el margen del documento html a 0 y ocultar el desbordamiento para mostrar la escena a ventana completa */
+  			margin: 0;
+  			overflow: hidden;
+  		}
+  	</style>
+  </head>
+  <body>
+
+    <div id="SalidaWebGL"></div>
+
+  <script type="text/javascript">
+  $(function() {
+    //Crear una escena, que contendr� todos los elementos como objetos, c�maras y luces.
+
+    var escena = new THREE.Scene();
+
+
+
+    //Crear una c�mara, que define hacia d�nde estamos mirando.
+
+    var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+
+
+    //Crear un objeto render y establecer su tama�o
+
+    var renderizador = new THREE.WebGLRenderer({alpha: true});
+
+    //renderizador.setClearColor(new THREE.Color(0xEEEEEE));
+
+    renderizador.setSize(window.innerWidth, window.innerHeight);
+
+    renderizador.shadowMapEnabled = true;
+
+    var ejes = new THREE.AxisHelper( 20 );
+
+    //escena.add(ejes);
+
+
+
+    //Crear el plano que simula el suelo
+
+    var geometriaDelPlano = new THREE.PlaneGeometry(60,20);
+
+    var materialDelPlano = new THREE.MeshLambertMaterial({color: 0xcccccc});
+
+    var plano = new THREE.Mesh(geometriaDelPlano,materialDelPlano);
+
+
+
+    //Rotar y posicionar el plano
+
+    plano.rotation.x=-0.5*Math.PI;
+
+    plano.position.x=15
+
+    plano.position.y=0
+
+    plano.position.z=0
+
+    plano.receiveShadow = true;
+
+
+    //Agregar el plano a la escena
+
+    //escena.add(plano);
+
+
+    //Agregar Luz
+    var luz = new THREE.SpotLight( 0xffffff );
+
+    luz.position.set( -40, 60, -10 );
+
+    luz.castShadow = true;
+
+    escena.add( luz );
+
+
+    //Anima los objetos
+    function animar() {
+
+      requestAnimationFrame(animar);
+
+      renderizador.render(escena, camara);
+
+    }
+
+
+
+    //Crear un cubo
+
+    var geometriaDelCubo = new THREE.CubeGeometry(4,4,4);
+
+    var materialDelCubo = new THREE.MeshLambertMaterial({map : THREE.ImageUtils.loadTexture('verdemetal.jpg')});
+
+    var cubo = new THREE.Mesh(geometriaDelCubo, materialDelCubo);
+
+
+
+    //Posicionar el cubo
+
+    cubo.position.x=-4;
+
+    cubo.position.y=3;
+
+    cubo.position.z=0;
+
+    cubo.castShadow = true;
+
+
+
+    //Agregar el cubo a la escena
+
+    //escena.add(cubo);
+
+
+
+    //Crear una esfera
+
+    var geometriaDeLaEsfera= new THREE.SphereGeometry(4,20,20);
+
+    var materialDeLaEsfera = new THREE.MeshLambertMaterial({map : THREE.ImageUtils.loadTexture('textbal.jpg')});
+
+    var esfera = new THREE.Mesh(geometriaDeLaEsfera, materialDeLaEsfera);
+
+
+
+    //Posici�n de la esfera
+
+    esfera.position.x=20;
+
+    esfera.position.y=4;
+
+    esfera.position.z=2;
+
+    esfera.castShadow = true;
+
+
+
+    //Agregar la esfera a la escena
+
+    escena.add(esfera);
+
+// Para controlar el rebote de la esfera
+      var paso=0;
+      var controles = new function() {
+        this.Vel_rotacion = 0.02;
+        this.Vel_rebote = 0.03;
+      }
+
+      var gui = new dat.GUI();
+      gui.add(controles, 'Vel_rotacion',0,0.5);
+      gui.add(controles, 'Vel_rebote',0,0.5);
+
+      // Llamada a funcion de animaci�n
+      animar();
+
+      function animar() {
+
+        // rotar el cubo
+        cubo.rotation.x += controles.Vel_rotacion;
+        cubo.rotation.y += controles.Vel_rotacion;
+        cubo.rotation.z += controles.Vel_rotacion;
+
+        // rebotar la esfera
+        paso+=controles.Vel_rebote;
+        esfera.position.x = 20+( 10*(Math.cos(paso)));
+        esfera.position.y = 2 +( 10*Math.abs(Math.sin(paso)));
+
+        // renderizar con requestAnimationFrame
+        requestAnimationFrame(animar);
+        renderizador.render(escena, camara);
+      }
+
+
+      //Posicionamos la c�mara y hacemos que apunte al centro de la escena.
+
+      camara.position.x = -30;
+
+      camara.position.y = 40;
+
+      camara.position.z = 30;
+
+      camara.lookAt(escena.position);
+
+      $("#SalidaWebGL").append(renderizador.domElement);
+
+      renderizador.render(escena, camara);
+
+     });
+  </script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Pintando pixeles con el clic del ratón</title>
+  </head>
+
+  <body>
+    <!-- Archivo con la rutina para pintar el pixel utilizando javascript -->
+    <script src="pixelclic.js"></script>
+    <p>Ochoa Valdivia Jaime Alejandro</p>
+    <p>Profesor: Jafet</p>
+    <p>Ejercicio 3: Pixel con click</p>
+    <p>Descripcion: Se modifico el archivo al agregarle el selector de color para poder cambiar los colores del punto a dibujar</p>
+    <p>Materia: Graficos por Computadora</p>
+    color<input type="color" id="color"/> <!-- Indicar el color del punto -->
+
+    <!-- Lienzo para pintar el punto al hacer clic con el ratón -->
+    <canvas style = "background-color: #A2A2A2;" id="lienzo" width="400" height="400" onmousedown="dibujar(event)"> 
+    </canvas>
+
+  </body>
+
+</html>

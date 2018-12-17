@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Filtros</title>
+    <link rel="stylesheet" href="cpy_imagen.css">
+  </head>
+  <body>
+   <canvas id='canvas'></canvas>
+   <canvas id='canvas2'></canvas>
+   <hr>
+   <input type='file' id='cargar' />
+   <hr>
+   <input type="button" value="Copiar" onclick="Copiar()"/>
+   <input type="button" value="Blanco y Negro" onclick="BlancoNegro()" />
+   <input type="button" value="Intercambio" onclick="Intercambio()"/>
+   <input type="button" value="Intercambio Dos" onclick="IntercambioDos()"/>
+   <input type="button" value="Sepia" onclick="Sepia()"/>
+   <input type="button" value="Ruido" onclick="Ruido()"/>
+   <hr>
+   <input type="button" value="Brillo" onclick="Brillo()" />
+   <input type="range" min="0" max="255" value="127" id="umbralBrillo"/>
+   <br>
+   <input type="button" value="Transparencia" onclick="Transparencia()" />
+   <input type="range" min="0" max="255" value="127" id="umbralTransparencia" />
+    <script src="cpy_imagen.js"></script>
+  </body>
+
+</html>
